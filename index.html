@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevPilot — UX Design Specification</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+:root{--bg:#0a0c10;--surface:#111318;--surface2:#181c24;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);--accent:#4ade80;--accent2:#60a5fa;--amber:#fbbf24;--red:#f87171;--purple:#a78bfa;--text:#e2e8f0;--muted:#64748b;--display:'DM Serif Display',Georgia,serif;--body:'DM Sans',sans-serif;--mono:'DM Mono',monospace}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.7}::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+.wrap{max-width:980px;margin:0 auto;padding:0 40px}
+.sidenav{position:fixed;left:0;top:0;bottom:0;width:210px;padding:36px 20px;border-right:1px solid var(--border);background:var(--bg);overflow-y:auto;z-index:100}
+.nav-logo{font-family:var(--display);font-size:17px;color:var(--accent);margin-bottom:8px}.nav-sub{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:32px}
+.sidenav ul{list-style:none;display:flex;flex-direction:column;gap:2px}
+.sidenav a{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:7px 12px;border-radius:6px;display:block;transition:all .2s}
+.sidenav a:hover,.sidenav a.active{color:var(--text);background:var(--surface)}.sidenav a.active{color:var(--accent)}
+.main{margin-left:210px}
+.cover{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 0;border-bottom:1px solid var(--border);background:radial-gradient(ellipse 70% 50% at 60% 20%,rgba(74,222,128,.08) 0%,transparent 65%)}
+.cover-tag{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:28px}
+.cover h1{font-family:var(--display);font-size:clamp(56px,7vw,96px);font-weight:400;line-height:1.05;margin-bottom:24px}
+.cover h1 em{font-style:italic;color:var(--accent)}
+.cover-desc{font-size:18px;font-weight:300;color:var(--muted);max-width:540px;margin-bottom:52px;line-height:1.8}
+.cover-pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;border-radius:100px;border:1px solid}
+.pill-green{border-color:var(--accent);color:var(--accent);background:rgba(74,222,128,.06)}.pill-blue{border-color:var(--accent2);color:var(--accent2);background:rgba(96,165,250,.06)}.pill-amber{border-color:var(--amber);color:var(--amber);background:rgba(251,191,36,.06)}.pill-purple{border-color:var(--purple);color:var(--purple);background:rgba(167,139,250,.06)}.pill-red{border-color:var(--red);color:var(--red);background:rgba(248,113,113,.06)}
+.section{padding:88px 0;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.section h2{font-family:var(--display);font-size:clamp(30px,4vw,52px);font-weight:400;line-height:1.15;margin-bottom:20px}
+.section-intro{font-size:16px;font-weight:300;color:var(--muted);max-width:620px;margin-bottom:48px;line-height:1.8}
+.cards{display:grid;gap:14px}.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:1fr 1fr 1fr}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px;transition:border-color .25s,transform .25s}
+.card:hover{border-color:rgba(74,222,128,.2);transform:translateY(-2px)}
+.card-icon{font-size:26px;margin-bottom:14px}.card-title{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.card-body{font-size:13px;font-weight:300;color:var(--muted);line-height:1.7}.card-body strong{color:var(--text);font-weight:500}
+.wf{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:28px 0}
+.wf-bar{background:var(--surface2);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;gap:12px}
+.dots{display:flex;gap:5px}.dot{width:9px;height:9px;border-radius:50%}.dot-r{background:#f87171}.dot-y{background:#fbbf24}.dot-g{background:#4ade80}
+.wf-title{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px}.wf-body{padding:24px}
+.ide{display:grid;grid-template-columns:200px 1fr 290px;min-height:520px}
+.ide-explorer{background:var(--surface2);border-right:1px solid var(--border);padding:16px}
+.ide-exp-title{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.ide-file{font-family:var(--mono);font-size:11px;color:var(--muted);padding:4px 8px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.ide-file.active{background:rgba(74,222,128,.1);color:var(--accent)}
+.ide-editor{background:var(--bg);display:flex;flex-direction:column}
+.ide-tabs{background:var(--surface2);border-bottom:1px solid var(--border);display:flex}
+.ide-tab{font-family:var(--mono);font-size:11px;padding:8px 16px;color:var(--muted);cursor:pointer;border-right:1px solid var(--border)}
+.ide-tab.active{color:var(--accent);border-bottom:2px solid var(--accent);margin-bottom:-1px}
+.code-area{flex:1;padding:16px;font-family:var(--mono);font-size:12px;line-height:1.8;position:relative;overflow:hidden}
+.ln{color:var(--border2);user-select:none;margin-right:16px;display:inline-block;width:20px;text-align:right}
+.kw{color:#c084fc}.fn{color:#60a5fa}.str{color:#4ade80}.cm{color:#475569;font-style:italic}.num{color:#fb923c}
+.suggestion-overlay{position:absolute;left:56px;top:196px;background:var(--surface2);border:1px solid rgba(74,222,128,.3);border-radius:8px;padding:12px 16px;max-width:340px;font-size:11px;line-height:1.7}
+.sug-header{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.conf-bar{flex:1;height:3px;background:var(--surface);border-radius:2px;overflow:hidden}
+.conf-fill{height:100%;background:var(--accent);border-radius:2px}
+.sug-code{color:var(--text)}.sug-actions{display:flex;gap:8px;margin-top:10px}
+.sug-btn{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:100px;border:1px solid;cursor:pointer}
+.sug-btn-acc{border-color:var(--accent);color:var(--accent);background:rgba(74,222,128,.08)}
+.sug-btn-rej{border-color:var(--border2);color:var(--muted);background:transparent}
+.sug-btn-exp{border-color:var(--accent2);color:var(--accent2);background:rgba(96,165,250,.08)}
+.ide-panel{background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column}
+.panel-tabs{display:flex;border-bottom:1px solid var(--border)}
+.ptab{font-family:var(--mono);font-size:10px;padding:8px 14px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
+.ptab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.panel-body{padding:16px;flex:1;overflow-y:auto}
+.conf-score{text-align:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:16px}
+.conf-num{font-family:var(--display);font-size:44px;color:var(--accent);line-height:1}
+.conf-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.exp-section{margin-bottom:16px}.exp-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.exp-body{font-size:12px;color:var(--muted);line-height:1.6}.exp-body strong{color:var(--text)}
+.source-pill{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:100px;border:1px solid var(--border2);color:var(--muted);margin:2px}
+.flow{display:flex;align-items:center;overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;gap:0;margin:28px 0}
+.fstep{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;min-width:90px}
+.fbubble{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--surface2);border:2px solid var(--border)}
+.fbubble.g{border-color:var(--accent);background:rgba(74,222,128,.08)}.fbubble.b{border-color:var(--accent2);background:rgba(96,165,250,.08)}.fbubble.a{border-color:var(--amber);background:rgba(251,191,36,.08)}.fbubble.r{border-color:var(--red);background:rgba(248,113,113,.08)}
+.flabel{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:center}
+.farr{color:var(--border2);font-size:18px;margin:0 6px;flex-shrink:0;align-self:center;padding-bottom:18px}
+.review-screen{background:var(--surface);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:28px;margin:28px 0}
+.review-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
+.review-badge{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--amber);font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:100px;white-space:nowrap;margin-top:4px}
+.review-title{font-family:var(--display);font-size:20px}.review-sub{font-size:12px;color:var(--muted);margin-top:3px}
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.review-card{background:var(--surface2);border-radius:8px;padding:16px}
+.rc-label{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.rc-body{font-size:12px;color:var(--text);line-height:1.6}
+.rc-code{font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--bg);padding:10px;border-radius:6px;line-height:1.7}
+.review-actions{display:flex;gap:10px;flex-wrap:wrap}
+.rbtn{padding:10px 20px;border-radius:8px;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:1px solid;transition:all .2s}
+.rbtn-acc{border-color:var(--accent);color:var(--accent);background:rgba(74,222,128,.08)}.rbtn-acc:hover{background:var(--accent);color:#0a0c10}
+.rbtn-mod{border-color:var(--amber);color:var(--amber);background:rgba(251,191,36,.08)}.rbtn-rej{border-color:var(--red);color:var(--red);background:rgba(248,113,113,.08)}
+.err-card{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.2);border-radius:12px;padding:24px;margin:14px 0}
+.err-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}.err-title{font-size:14px;font-weight:500;color:var(--red)}
+.err-desc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7}
+.err-actions{display:flex;gap:8px}
+.ebtn{padding:7px 16px;border-radius:6px;font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:1px solid}
+.ebtn-r{border-color:var(--red);color:var(--red);background:rgba(248,113,113,.08)}.ebtn-s{border-color:var(--border2);color:var(--muted);background:transparent}.ebtn-b{border-color:var(--accent2);color:var(--accent2);background:rgba(96,165,250,.08)}
+.ann{display:flex;gap:12px;padding:14px 16px;background:rgba(74,222,128,.04);border-left:2px solid var(--accent);border-radius:0 8px 8px 0;margin:12px 0}
+.ann-num{font-family:var(--mono);font-size:10px;color:var(--accent);flex-shrink:0;padding-top:2px}
+.ann-text{font-size:13px;color:var(--muted);line-height:1.6}.ann-text strong{color:var(--text)}
+.spec-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:13px}
+.spec-table th{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 14px;border-bottom:1px solid var(--border)}
+.spec-table td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.6}
+.spec-table tr:last-child td{border-bottom:none}.spec-table tr:hover td{background:var(--surface)}
+.spec-table td:first-child{font-family:var(--mono);font-size:11px;color:var(--accent);white-space:nowrap}
+.trust-meter{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0}
+.tm-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}.tm-row:last-child{margin-bottom:0}
+.tm-label{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--muted);width:140px;flex-shrink:0}
+.tm-track{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.tm-fill{height:100%;border-radius:3px}.tm-val{font-family:var(--mono);font-size:11px;width:36px;text-align:right;flex-shrink:0}
+@keyframes blink-cursor{50%{opacity:0}}.cursor{display:inline-block;width:8px;height:14px;background:var(--accent);margin-left:2px;animation:blink-cursor 1s infinite;vertical-align:middle}
+@media(max-width:860px){.sidenav{display:none}.main{margin-left:0}.c2,.c3{grid-template-columns:1fr}.ide{grid-template-columns:1fr}.ide-explorer,.ide-panel{display:none}.review-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="sidenav">
+  <div class="nav-logo">DevPilot</div>
+  <div class="nav-sub">UX Spec · v1.0</div>
+  <ul>
+    <li><a href="#cover" class="active">Overview</a></li>
+    <li><a href="#principles">Principles</a></li>
+    <li><a href="#ia">Architecture</a></li>
+    <li><a href="#flows">User Flows</a></li>
+    <li><a href="#ide">IDE Integration</a></li>
+    <li><a href="#confidence">Confidence System</a></li>
+    <li><a href="#explain">Explanation Panel</a></li>
+    <li><a href="#review">Human Review</a></li>
+    <li><a href="#errors">Error Recovery</a></li>
+    <li><a href="#trust">Trust Indicators</a></li>
+    <li><a href="#components">Component Spec</a></li>
+  </ul>
+</nav>
+<div class="main">
+
+<section class="cover" id="cover">
+  <div class="wrap">
+    <p class="cover-tag">UX Design Specification · Google DeepMind · v1.0</p>
+    <h1>Dev<em>Pilot</em></h1>
+    <p class="cover-desc">A next-generation AI coding assistant designed for developers who need transparency and control. Every suggestion is explainable, every decision is reversible, and the human is always in charge.</p>
+    <div class="cover-pills">
+      <span class="pill pill-green">Transparency</span>
+      <span class="pill pill-blue">Developer Control</span>
+      <span class="pill pill-amber">Trust Indicators</span>
+      <span class="pill pill-purple">Confidence Scoring</span>
+      <span class="pill pill-red">Error Recovery</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="principles">
+  <div class="wrap">
+    <p class="sec-num">01 — Design Principles</p>
+    <h2>Built for developers who don't trust black boxes</h2>
+    <p class="section-intro">Developers are the most skeptical users. DevPilot earns trust by showing its work — every suggestion, every decision, every source.</p>
+    <div class="cards c2">
+      <div class="card"><div class="card-icon">🔬</div><div class="card-title">Show your reasoning</div><div class="card-body">Every code suggestion includes <strong>why it was generated</strong>, what patterns it matched, and what tradeoffs exist. Developers don't just want the answer — they want to understand it.</div></div>
+      <div class="card"><div class="card-icon">🎛️</div><div class="card-title">Reversible by default</div><div class="card-body">No suggestion is permanent until the developer explicitly commits. <strong>One keystroke to undo</strong> any AI action. Full diff view before any file changes. No surprises.</div></div>
+      <div class="card"><div class="card-icon">📊</div><div class="card-title">Calibrated confidence</div><div class="card-body">DevPilot never pretends to be certain when it isn't. <strong>Confidence scores are honest</strong> — a 60% score routes to review automatically. Overconfidence erodes trust faster than any bug.</div></div>
+      <div class="card"><div class="card-icon">⚡</div><div class="card-title">Minimal friction, maximum clarity</div><div class="card-body">Developers are in flow. <strong>DevPilot never interrupts unless necessary.</strong> Suggestions appear inline, explanation is one key away, review workflows are fast by design.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ia">
+  <div class="wrap">
+    <p class="sec-num">02 — Information Architecture</p>
+    <h2>Four surfaces, one mental model</h2>
+    <p class="section-intro">DevPilot lives inside the developer's existing environment. The IA maps to how developers already think — not how AI products are typically structured.</p>
+    <div class="wf">
+      <div class="wf-bar"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="wf-title">DevPilot — Information Architecture</div></div>
+      <div class="wf-body">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+          <div style="background:var(--surface2);border-radius:8px;padding:16px;border:1px solid rgba(74,222,128,.2);">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">Inline</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.8;">Code suggestions<br>Ghost text<br>Quick accept/reject<br>Inline confidence dot</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:16px;border:1px solid rgba(96,165,250,.2);">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;">Side Panel</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.8;">Explanation view<br>Confidence score<br>Source citations<br>Alternatives</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:16px;border:1px solid rgba(251,191,36,.2);">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:12px;">Review Queue</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.8;">Low-confidence holds<br>Risky operations<br>Batch decisions<br>Audit trail</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:16px;border:1px solid rgba(167,139,250,.2);">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--purple);margin-bottom:12px;">Settings</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.8;">Confidence thresholds<br>Auto-accept rules<br>Review triggers<br>Model preferences</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ann"><span class="ann-num">IA-1</span><span class="ann-text"><strong>No separate "DevPilot app"</strong> — all surfaces live inside the IDE. Developers should never need to context-switch to use DevPilot.</span></div>
+    <div class="ann"><span class="ann-num">IA-2</span><span class="ann-text"><strong>Review Queue is separate from the editor</strong> — low-confidence suggestions don't block editing flow. They queue silently for batch review.</span></div>
+  </div>
+</section>
+
+<section class="section" id="flows">
+  <div class="wrap">
+    <p class="sec-num">03 — User Flows</p>
+    <h2>Four journeys that define the product</h2>
+    <div style="margin-bottom:36px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Flow A — Inline suggestion accepted</div>
+      <div class="flow">
+        <div class="fstep"><div class="fbubble b">✍️</div><div class="flabel">Dev types</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble g">💡</div><div class="flabel">Ghost text</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble g">👁️</div><div class="flabel">Dev scans</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble g">⇥</div><div class="flabel">Tab accept</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble g">✅</div><div class="flabel">Inserted</div></div>
+      </div>
+    </div>
+    <div style="margin-bottom:36px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px;">Flow B — Developer wants explanation</div>
+      <div class="flow">
+        <div class="fstep"><div class="fbubble g">💡</div><div class="flabel">Suggestion</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble b">⌘E</div><div class="flabel">Explain key</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble b">📋</div><div class="flabel">Panel opens</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble b">📚</div><div class="flabel">Reads reasoning</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble g">✅</div><div class="flabel">Accept/Modify</div></div>
+      </div>
+    </div>
+    <div style="margin-bottom:36px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;">Flow C — Low confidence → human review</div>
+      <div class="flow">
+        <div class="fstep"><div class="fbubble a">⚠️</div><div class="flabel">Low confidence</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble a">📥</div><div class="flabel">Queued</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble a">🔍</div><div class="flabel">Dev reviews</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble a">🤔</div><div class="flabel">Accept/Modify/Reject</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble g">🔄</div><div class="flabel">Model learns</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:14px;">Flow D — Error recovery</div>
+      <div class="flow">
+        <div class="fstep"><div class="fbubble r">💥</div><div class="flabel">Build breaks</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble r">🔔</div><div class="flabel">Error detected</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble r">🩺</div><div class="flabel">Root cause</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble a">🛠️</div><div class="flabel">Fix offered</div></div><div class="farr">→</div>
+        <div class="fstep"><div class="fbubble g">✅</div><div class="flabel">One-click restore</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ide">
+  <div class="wrap">
+    <p class="sec-num">04 — IDE Integration</p>
+    <h2>The suggestion feels native, not intrusive</h2>
+    <p class="section-intro">DevPilot's primary surface is inline ghost text. The design challenge: be helpful without breaking flow. Actions appear only when the developer pauses — never while actively typing.</p>
+    <div class="wf">
+      <div class="wf-bar"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><div class="wf-title">DevPilot — VS Code Integration (Active Suggestion)</div></div>
+      <div class="wf-body" style="padding:0">
+        <div class="ide">
+          <div class="ide-explorer">
+            <div class="ide-exp-title">Explorer</div>
+            <div class="ide-file active">📄 auth.service.ts</div>
+            <div class="ide-file">📄 user.model.ts</div>
+            <div class="ide-file">📄 api.client.ts</div>
+            <div class="ide-file">📁 utils/</div>
+            <div class="ide-file">📄 index.ts</div>
+          </div>
+          <div class="ide-editor">
+            <div class="ide-tabs"><div class="ide-tab active">auth.service.ts</div><div class="ide-tab">user.model.ts</div></div>
+            <div class="code-area">
+              <div><span class="ln">1</span><span class="kw">import</span> { Injectable } <span class="kw">from</span> <span class="str">'@angular/core'</span>;</div>
+              <div><span class="ln">2</span><span class="kw">import</span> { HttpClient } <span class="kw">from</span> <span class="str">'@angular/common/http'</span>;</div>
+              <div><span class="ln">3</span></div>
+              <div><span class="ln">4</span><span class="cm">// DevPilot: Detected JWT auth pattern — suggesting secure token handler</span></div>
+              <div><span class="ln">5</span>@Injectable({ providedIn: <span class="str">'root'</span> })</div>
+              <div><span class="ln">6</span><span class="kw">export class</span> <span class="fn">AuthService</span> {</div>
+              <div><span class="ln">7</span>&nbsp;&nbsp;<span class="kw">private</span> tokenKey = <span class="str">'dp_auth_token'</span>;</div>
+              <div><span class="ln">8</span></div>
+              <div><span class="ln">9</span>&nbsp;&nbsp;<span class="fn">validateToken</span>(token: <span class="kw">string</span>): <span class="kw">boolean</span> {<span class="cursor"></span></div>
+              <div style="position:relative;height:140px;">
+                <div class="suggestion-overlay">
+                  <div class="sug-header">DevPilot suggestion<div class="conf-bar"><div class="conf-fill" style="width:87%"></div></div><span style="font-size:9px;color:var(--accent)">87%</span></div>
+                  <div class="sug-code"><span class="kw">if</span> (!token || token.split(<span class="str">'.'</span>).length !== <span class="num">3</span>) <span class="kw">return false</span>;<br><span class="kw">const</span> payload = <span class="fn">JSON.parse</span>(<span class="fn">atob</span>(token.split(<span class="str">'.'</span>)[<span class="num">1</span>]));<br><span class="kw">return</span> payload.exp &gt; Date.now() / <span class="num">1000</span>;</div>
+                  <div class="sug-actions"><button class="sug-btn sug-btn-acc">⇥ Accept</button><button class="sug-btn sug-btn-rej">Esc Dismiss</button><button class="sug-btn sug-btn-exp">⌘E Explain</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ide-panel">
+            <div class="panel-tabs"><div class="ptab active">Explain</div><div class="ptab">Alternatives</div><div class="ptab">History</div></div>
+            <div class="panel-body">
+              <div class="conf-score"><div class="conf-num">87%</div><div class="conf-label">Confidence</div></div>
+              <div class="exp-section"><div class="exp-title">Why this suggestion</div><div class="exp-body">DevPilot detected a <strong>JWT validation pattern</strong>. This implementation checks token structure, decodes the payload, and validates expiry — the three minimum requirements for secure JWT validation.</div></div>
+              <div class="exp-section"><div class="exp-title">Tradeoffs</div><div class="exp-body"><strong>✓</strong> Handles malformed tokens safely<br><strong>⚠</strong> Does not verify signature — add server-side verification for production</div></div>
+              <div class="exp-section"><div class="exp-title">Sources</div><div><span class="source-pill">JWT RFC 7519</span><span class="source-pill">OWASP Auth Guide</span><span class="source-pill">Your codebase</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ann"><span class="ann-num">IDE-1</span><span class="ann-text"><strong>Ghost text appears only after 600ms pause in typing</strong> — not while actively typing. Premature suggestions are the #1 reported annoyance in developer AI tools.</span></div>
+    <div class="ann"><span class="ann-num">IDE-2</span><span class="ann-text"><strong>The inline comment on line 4</strong> tells the developer what the model recognised before showing code. Context before code — always.</span></div>
+    <div class="ann"><span class="ann-num">IDE-3</span><span class="ann-text"><strong>The ⚠ tradeoff note</strong> is mandatory for security-sensitive suggestions. DevPilot never hides known limitations of its own output.</span></div>
+  </div>
+</section>
+
+<section class="section" id="confidence">
+  <div class="wrap">
+    <p class="sec-num">05 — Confidence Scoring System</p>
+    <h2>Honest uncertainty is a feature, not a bug</h2>
+    <p class="section-intro">DevPilot's confidence score drives routing decisions automatically. Developers set their own thresholds — DevPilot respects them.</p>
+    <div class="trust-meter">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:18px;">Confidence routing thresholds (developer-configurable)</div>
+      <div class="tm-row"><div class="tm-label">90–100% Auto-accept</div><div class="tm-track"><div class="tm-fill" style="width:100%;background:var(--accent)"></div></div><div class="tm-val" style="color:var(--accent)">100%</div></div>
+      <div class="tm-row"><div class="tm-label">75–89% Inline review</div><div class="tm-track"><div class="tm-fill" style="width:89%;background:var(--accent2)"></div></div><div class="tm-val" style="color:var(--accent2)">89%</div></div>
+      <div class="tm-row"><div class="tm-label">50–74% Queue review</div><div class="tm-track"><div class="tm-fill" style="width:74%;background:var(--amber)"></div></div><div class="tm-val" style="color:var(--amber)">74%</div></div>
+      <div class="tm-row"><div class="tm-label">&lt;50% Explicit ask</div><div class="tm-track"><div class="tm-fill" style="width:50%;background:var(--red)"></div></div><div class="tm-val" style="color:var(--red)">50%</div></div>
+    </div>
+    <div class="cards c3" style="margin-top:24px;">
+      <div class="card"><div class="card-title">Confidence signals</div><div class="card-body">Score computed from: <strong>pattern match strength</strong>, training data coverage, codebase consistency, and security sensitivity of the operation.</div></div>
+      <div class="card"><div class="card-title">Security override</div><div class="card-body">Any suggestion touching <strong>auth, crypto, SQL, or file I/O</strong> caps at 74% regardless of model certainty — these always require explicit developer review.</div></div>
+      <div class="card"><div class="card-title">Learning from decisions</div><div class="card-body">When developers reject or modify suggestions, the confidence model <strong>recalibrates locally</strong>. If you always reject a pattern, DevPilot stops suggesting it.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="explain">
+  <div class="wrap">
+    <p class="sec-num">06 — Code Explanation Panel</p>
+    <h2>Every suggestion earns its place</h2>
+    <p class="section-intro">The explanation panel answers the developer's unspoken question: "Why should I trust this?"</p>
+    <table class="spec-table">
+      <thead><tr><th>Panel Section</th><th>Content</th><th>Design Rationale</th></tr></thead>
+      <tbody>
+        <tr><td>What it does</td><td>Plain English description — no jargon, one sentence max.</td><td>Developers read this first. Instant clarity or trust collapses.</td></tr>
+        <tr><td>Why suggested</td><td>Pattern detected, context from surrounding code, user preference signals.</td><td>Transparency about reasoning builds confidence. Black box = rejected.</td></tr>
+        <tr><td>Confidence breakdown</td><td>Visual bar + percentage. Sub-scores: pattern match, security sensitivity, codebase fit.</td><td>A single number is gamed. Sub-scores reveal which dimension is uncertain.</td></tr>
+        <tr><td>Known tradeoffs</td><td>What this approach doesn't handle, edge cases, performance implications.</td><td>Mandatory. DevPilot must disclose its own limitations. Silence implies false certainty.</td></tr>
+        <tr><td>Sources</td><td>RFC, docs, OWASP, or codebase patterns referenced. Clickable where possible.</td><td>Developers want to verify. Citations give them a path to do so.</td></tr>
+        <tr><td>Alternatives</td><td>1–2 alternative approaches with tradeoff comparison. Selectable to replace suggestion.</td><td>Forces DevPilot to have considered options. Choice = developer control.</td></tr>
+      </tbody>
+    </table>
+    <div class="ann"><span class="ann-num">EP-1</span><span class="ann-text"><strong>Panel opens on ⌘E, never automatically</strong> — opening on every suggestion interrupts flow for the 80% who don't need it. Explanation is on-demand, always available, never forced.</span></div>
+  </div>
+</section>
+
+<section class="section" id="review">
+  <div class="wrap">
+    <p class="sec-num">07 — Human Review Workflows</p>
+    <h2>The review screen is a decision tool, not a notification</h2>
+    <p class="section-intro">When a suggestion is queued for review, it lands in a screen designed for fast, confident decisions.</p>
+    <div class="review-screen">
+      <div class="review-header">
+        <div><div class="review-title">Review required: database query suggestion</div><div class="review-sub">auth.service.ts · Line 42 · Queued 3 minutes ago · SQL operation — always reviewed</div></div>
+        <div class="review-badge">⚠ Security-sensitive</div>
+      </div>
+      <div class="review-grid">
+        <div class="review-card"><div class="rc-label">What the AI wants to write</div><div class="rc-code"><span class="kw">const</span> result = <span class="kw">await</span> db.query(<br>&nbsp;&nbsp;<span class="str">`SELECT * FROM users WHERE id = ${"{userId}"}`</span><br>);</div></div>
+        <div class="review-card"><div class="rc-label">Why it's flagged</div><div class="rc-body">This uses <strong>string interpolation in SQL</strong> — a potential SQL injection vulnerability. DevPilot confidence: 52%. The pattern matches your codebase style but violates security best practices.</div></div>
+        <div class="review-card"><div class="rc-label">Recommended alternative</div><div class="rc-code"><span class="kw">const</span> result = <span class="kw">await</span> db.query(<br>&nbsp;&nbsp;<span class="str">'SELECT * FROM users WHERE id = $1'</span>,<br>&nbsp;&nbsp;[userId]<br>);</div></div>
+        <div class="review-card"><div class="rc-label">Risk summary</div><div class="rc-body"><strong style="color:var(--red)">Original:</strong> SQL injection risk — HIGH<br><strong style="color:var(--accent)">Alternative:</strong> Parameterised query — SAFE<br><br>DevPilot recommends using the alternative.</div></div>
+      </div>
+      <div class="review-actions">
+        <button class="rbtn rbtn-acc">✓ Accept alternative (recommended)</button>
+        <button class="rbtn rbtn-mod">✎ Edit before accepting</button>
+        <button class="rbtn rbtn-rej">✕ Reject both — I'll write it</button>
+      </div>
+    </div>
+    <div class="ann"><span class="ann-num">RV-1</span><span class="ann-text"><strong>Side-by-side: original and alternative</strong> — reviewers must see both options simultaneously. Sequential views make comparison harder and lead to worse decisions.</span></div>
+    <div class="ann"><span class="ann-num">RV-2</span><span class="ann-text"><strong>"I'll write it" is always an option</strong> — rejecting both suggestions must be frictionless. Any design that makes "accept AI" easier than "write it yourself" undermines developer autonomy.</span></div>
+    <div class="ann"><span class="ann-num">RV-3</span><span class="ann-text"><strong>Security reason is explicit</strong> — not "low confidence" but "SQL operation — always reviewed." Developers accept gates more readily when they understand the rule, not just the outcome.</span></div>
+  </div>
+</section>
+
+<section class="section" id="errors">
+  <div class="wrap">
+    <p class="sec-num">08 — Error Recovery</p>
+    <h2>When AI breaks the build, recovery is one step</h2>
+    <p class="section-intro">AI-generated code will sometimes fail. The design goal is not to prevent all errors — it's to make recovery so fast and transparent that errors don't erode trust.</p>
+    <div class="cards c3" style="margin-bottom:28px;">
+      <div class="card"><div class="card-icon">💥</div><div class="card-title">Build failure</div><div class="card-body">DevPilot <strong>identifies which suggestion caused it</strong> and offers a one-click revert to before that suggestion was accepted.</div></div>
+      <div class="card"><div class="card-icon">🧪</div><div class="card-title">Test failure</div><div class="card-body">Shows <strong>which test, why it failed, and what the suggested code assumed</strong> that turned out to be wrong.</div></div>
+      <div class="card"><div class="card-icon">🔒</div><div class="card-title">Security scan alert</div><div class="card-body">Surfaces the specific vulnerability, <strong>explains what it got wrong</strong>, and offers a corrected version.</div></div>
+    </div>
+    <div class="err-card">
+      <div class="err-head"><div class="err-icon">💥</div><div class="err-title">Build failed — DevPilot suggestion may be the cause</div></div>
+      <div class="err-desc">The build broke after accepting a suggestion in <strong>auth.service.ts at line 9</strong>, 2 minutes ago. DevPilot traced the error to <code style="font-family:var(--mono);font-size:11px;color:var(--accent2)">atob()</code> — this function is not available in Node.js environments, only browser contexts.<br><br><strong style="color:var(--text)">Your code is unchanged.</strong> The suggestion is isolated and can be reverted in one click.</div>
+      <div class="err-actions"><button class="ebtn ebtn-r">↩ Revert suggestion</button><button class="ebtn ebtn-b">🔧 Apply Node.js fix</button><button class="ebtn ebtn-s">View diff</button></div>
+    </div>
+    <div class="ann"><span class="ann-num">ER-1</span><span class="ann-text"><strong>"Your code is unchanged"</strong> — this phrase appears in every error message. It's the most anxiety-reducing statement possible when AI has modified your files.</span></div>
+    <div class="ann"><span class="ann-num">ER-2</span><span class="ann-text"><strong>DevPilot explains what it got wrong</strong> — "atob() is browser-only" tells the developer something useful. "Unexpected error" tells them nothing and destroys trust.</span></div>
+  </div>
+</section>
+
+<section class="section" id="trust">
+  <div class="wrap">
+    <p class="sec-num">09 — Trust Indicators</p>
+    <h2>Trust is built in the details</h2>
+    <p class="section-intro">Persistent visual signals that communicate DevPilot's state and reliability — present on every screen, not just error states.</p>
+    <table class="spec-table">
+      <thead><tr><th>Indicator</th><th>Appearance</th><th>What it communicates</th></tr></thead>
+      <tbody>
+        <tr><td>Confidence dot</td><td>3px dot in gutter next to AI-generated lines. Green ≥85%, amber 60–84%, red &lt;60%.</td><td>At-a-glance reliability of each line without opening the panel.</td></tr>
+        <tr><td>Model version tag</td><td>Status bar: "DevPilot 2.1 · updated 3 days ago". Clickable to changelog.</td><td>Version changes are surfaced, not silent. Transparency about what's running.</td></tr>
+        <tr><td>Context window</td><td>Status bar icon: files in DevPilot's context. Hover to see full list.</td><td>Developers know exactly what the AI can and cannot see. No hidden context.</td></tr>
+        <tr><td>AI-authored blame</td><td>In git blame, AI-accepted lines show "DevPilot" as author with confidence score.</td><td>AI authorship visible in audit trail — not hidden as if the developer wrote it.</td></tr>
+        <tr><td>Session accuracy</td><td>Side panel footer: "87% of suggestions accepted this session".</td><td>Calibration feedback — helps developers decide how much to trust today's session.</td></tr>
+        <tr><td>Uncertainty callout</td><td>Inline comment before uncertain suggestions: "// DevPilot: low confidence — verify this".</td><td>DevPilot never lets a low-confidence suggestion look like a high-confidence one.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <div class="wrap">
+    <p class="sec-num">10 — Component Spec</p>
+    <h2>Design system decisions</h2>
+    <table class="spec-table">
+      <thead><tr><th>Component</th><th>Spec</th><th>Principle</th></tr></thead>
+      <tbody>
+        <tr><td>Ghost text</td><td>50% opacity, italic, themed color distinct from normal code. Disappears instantly on keypress.</td><td>Developer control</td></tr>
+        <tr><td>Confidence bar</td><td>6px height, colour-coded, always shows percentage. Never hidden in settings.</td><td>Transparency</td></tr>
+        <tr><td>Explanation panel</td><td>Opens at 300px width, collapsible. Persists across suggestions — shows history. ⌘E always works.</td><td>Transparency</td></tr>
+        <tr><td>Review queue badge</td><td>Amber at 1+, pulses at 5+. Never red — reviews are normal, not errors.</td><td>Developer control</td></tr>
+        <tr><td>Revert button</td><td>Always visible in status bar when AI suggestions are active. One click, no confirmation.</td><td>Developer control</td></tr>
+        <tr><td>Security gate</td><td>Amber border, explicit reason. Cannot be bypassed via settings.</td><td>Transparency, Trust</td></tr>
+        <tr><td>Empty explanation</td><td>If DevPilot cannot explain, it says so: "Generated without a clear pattern match." Never fabricates reasoning.</td><td>Transparency</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:56px;padding:36px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center;">
+      <div style="font-family:var(--display);font-size:32px;margin-bottom:10px;color:var(--text);">Dev<span style="color:var(--accent);">Pilot</span></div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:28px;">End of specification · Google DeepMind · v1.0</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <span class="pill pill-green">Transparency</span><span class="pill pill-blue">Developer Control</span><span class="pill pill-amber">Trust Indicators</span><span class="pill pill-purple">Confidence Scoring</span><span class="pill pill-red">Error Recovery</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+<script>
+const sections=document.querySelectorAll('section[id]'),links=document.querySelectorAll('.sidenav a');
+sections.forEach(s=>new IntersectionObserver(entries=>{if(entries[0].isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.sidenav a[href="#'+s.id+'"]');if(a)a.classList.add('active');}},{threshold:0.25}).observe(s));
+</script>
+</body>
+</html>
